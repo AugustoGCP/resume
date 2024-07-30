@@ -1,0 +1,52 @@
+<div class="container mt-3 card-prinicipal">
+    <div class="card text-center">
+        <div class="card-header">
+            <ul class="nav nav-tabs card-header-tabs" id="myTab" role="tablist">
+                
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="about-tab" data-bs-toggle="tab" data-bs-target="#about-tab-pane" type="button" role="tab" aria-controls="about-tab-pane" aria-selected="false">
+                        <i data-lucide="user" class="icons"></i>Sobre mim
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="resume-tab" data-bs-toggle="tab" data-bs-target="#resume-tab-pane" type="button" role="tab" aria-controls="resume-tab-pane" aria-selected="false">
+                        <i data-lucide="notebook-text" class="icons"></i>Currículo
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact-tab-pane" type="button" role="tab" aria-controls="contact-tab-pane" aria-selected="true">
+                        <i data-lucide="mailbox" class="icons"></i>Contato
+                    </button>
+                </li>
+
+            </ul>
+        </div>
+
+        <div class="card-body">
+            <div class="row">
+
+                <div class="col-sm-4 border-end position-relative mt-5 py-2 px-4">
+                    <%-include('presentation')%>
+                </div>
+                
+                <div class="col-sm-8 scrollbar">
+                    <div class="tab-content" id="myTabContent">
+                        <%-include('about')%>
+                        <%-include('resume')%>
+                        <%-include('contact')%>
+                    </div>
+                </div>               
+                
+            </div>
+
+            <%-include('Toats/toastDanger')%>
+            <%-include('Toats/toastSuccess')%>
+            
+        </div>
+                               
+    </div>
+    <div class="text-center">
+        <span>Augusto Pires - All rights reserved &copy;</span>
+    </div>
+    
+</div>

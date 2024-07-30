@@ -1,0 +1,126 @@
+<script type="module">
+    import { post } from './js/AJAX/POST.js';
+
+    $('#sendEmail').click(function(event) {
+        event.preventDefault(); // Impede o envio do formulário
+        var isValid = true;
+        var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Regex para validar email
+
+            // Verifica se todos os campos obrigatórios estão preenchidos
+        $('#formulario [required]').each(function() {
+            if (!$(this).val()) {
+                isValid = false;
+                $(this).addClass('is-invalid'); // Adiciona uma classe para indicar erro
+            } else {
+                $(this).removeClass('is-invalid'); // Remove a classe de 
+                $(this).removeClass('is-valid');
+            }
+        });
+
+        // Verifica o textarea fora do formulário
+        var externalTextarea = $('#message');
+        if (!externalTextarea.val()) {
+            isValid = false;
+            externalTextarea.addClass('is-invalid'); // Adiciona uma classe para indicar erro
+        } else {
+            externalTextarea.removeClass('is-invalid'); 
+            externalTextarea.removeClass('is-valid'); 
+        }
+
+        var emailField = $('#email'); // Assumindo que o campo de email tem o id 'email'
+        if (emailField.length && !emailRegex.test(emailField.val())) {
+            isValid = false;
+            emailField.addClass('is-invalid'); 
+        } else {
+            emailField.removeClass('is-invalid'); // Remove a classe de erro se estiver preenchido corretamente
+        }
+
+        if (!isValid) {
+            // Exibe uma mensagem de erro ou faz algo para informar o usuário
+            alert("Por favor, preencha todos os campos obrigatórios.");
+            return;
+        }else{
+                var formArray = $("#formulario ").serializeArray();
+                var formData = new FormData();
+
+                $.each(formArray, function(i, field) {
+                    formData.append(field.name, field.value);
+                });
+
+                formData.append('message', $('#message').val())
+
+                post('send', formData);
+            
+        }
+    }); 
+    
+</script>
+
+<div class="tab-pane fade" id="contact-tab-pane" role="tabpanel" aria-labelledby="contact-tab" tabindex="0">
+    <div class="row">
+        <div class="col-sm-12 ms-3">
+            <h1 class="text-start ubuntu-medium">Cont<span class="destaque">ato</span></h1>
+        </div>
+        <div class="col-sm-4">
+            <div class="position-relative">
+                <div class="d-flex flex-column ms-2 mt-3 mb-3 position-absolute top-0 start-0">
+                    <div class="p-2 border bg-light bg-gradient px-4 py-4 mb-2">
+                        <i data-lucide="map-pin" class="mb-1 destaque"></i>
+                        <p class="mb-0 ubuntu-medium">Juiz de Fora</p>
+                    </div>
+                    <div class="p-2 border bg-light bg-gradient px-4 py-4 mb-2">
+                        <a href="https://wa.me/5532988576281?text=Olá,%20gostaria%20de%20saber%20mais%20sobre%20seus%20serviços.">
+                            <i data-lucide="phone" class="mb-1 destaque"></i> 
+                            <p class="mb-0 ubuntu-medium">(32) 98857-6281</p>
+                        </a>  
+                    </div>       
+                    <div class="p-2 border bg-light bg-gradient px-4 py-4 mb-2">
+                        <i data-lucide="mail" class="mb-1 destaque"></i>
+                        <p class="mb-0 ubuntu-medium">augusto.garcia.cp@gmail.com</p>
+                    </div>
+                </div>
+            </div>            
+        </div>
+
+        <div class="col-sm-8 mt-3">
+            <!-- <img src="img/maps.jpg" class="img-fluid ms-2" alt="..." style="height: 200px; width: 530px;"> -->
+            <div class="row ms-0 mt-3">
+                <div class="col-sm-6">
+                    <form id="formulario" class="row pe-0 g-3 needs-validation">
+                        <div class="col-12 mb-2">
+                            <label for="name" class="visually-hidden">Seu nome</label>
+                            <input type="text" class="form-control ubuntu-light" id="name" name="name" placeholder="Seu nome" required>
+                        </div>
+                        <div class="col-12 mb-2">
+                            <label for="email" class="visually-hidden">Seu e-mail</label>
+                            <input type="email" class="form-control ubuntu-light" id="email" name="email" placeholder="Seu e-mail" required>
+                        </div>
+                        <div class="col-12 mb-2">
+                            <label for="subject" class="visually-hidden">Assunto</label>
+                            <input type="text" class="form-control ubuntu-light" id="subject" name="subject" placeholder="Assunto" required>
+                        </div>
+                        <div class="form-floating d-flex p-2 ms-1">
+                            <button id="sendEmail" class="btn btn-lg btn-outline-secondary rounded-pill ms-0 pt-1">
+                                <i data-lucide="send" class="icons me-2"></i>Enviar
+                            </button>
+                            <div id="spinner" class="ms-2 mt-2" style="display:none;">
+                                <span class="spinner-grow spinner-grow-sm" aria-hidden="true"></span>
+                                <span role="status">Loading...</span>
+                            </div>                            
+                        </div>  
+                    </form>
+                </div>  
+                <div class="col-sm-6 ps-0">
+                    <!-- <div class="form-floating"> -->
+                        <textarea class="form-control ubuntu-light" placeholder="Sua menasgem..." id="message" style="height: 135px" required></textarea>
+                        <!-- <label for="mensagem">Sua mensagem...</label> -->
+                    <!-- </div> -->
+                </div> 
+                <!-- <div class="col-sm-4 ms-0">
+                                      
+                </div>              -->
+            </div>
+        </div>
+
+    </div>
+</div>
